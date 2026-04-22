@@ -40,7 +40,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://thisisfinalrepoofbackend.vercel.app/api/auth/login",
+        "https://thisisfinalrepoofbackend.vercel.app/api/auth/",
         formData
       );
 
