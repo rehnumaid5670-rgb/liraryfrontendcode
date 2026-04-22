@@ -13,7 +13,7 @@ function Feedback() {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get("https://thisisfinalrepoofbackend.vercel.app/");
+      const res = await axios.get("https://thisisfinalrepoofbackend.vercel.app/api/feedback");
       setFeedback(res.data);
     } catch (err) {
       console.log(err);

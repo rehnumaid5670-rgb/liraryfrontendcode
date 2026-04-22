@@ -15,8 +15,8 @@ function LibraryMedia() {
     setLoading(true);
     try {
       const [ebooksRes, audiobooksRes] = await Promise.all([
-        axios.get("https://thisisfinalrepoofbackend.vercel.app/"),
-        axios.get("https://thisisfinalrepoofbackend.vercel.app/"),
+        axios.get("https://thisisfinalrepoofbackend.vercel.app/api/ebook"),
+        axios.get("https://thisisfinalrepoofbackend.vercel.app/api/audiobook"),
       ]);
       setEbooks(ebooksRes.data);
       setAudiobooks(audiobooksRes.data);

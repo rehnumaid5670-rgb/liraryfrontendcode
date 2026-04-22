@@ -40,7 +40,7 @@ function SpaceBooking() {
     setMessage("");
     try {
       const res = await axios.post(
-        "https://thisisfinalrepoofbackend.vercel.app/",
+        "https://thisisfinalrepoofbackend.vercel.app/api/space/book-space",
         { spaceName, date, startTime, endTime },
         { headers: { Authorization: `Bearer ${token}` } }
       );

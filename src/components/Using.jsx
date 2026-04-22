@@ -22,7 +22,7 @@ function UsingLibrary() {
       }
 
       const response = await axios.get(
-        "https://thisisfinalrepoofbackend.vercel.app/",
+        "https://thisisfinalrepoofbackend.vercel.app/api/library/user",
         {
           headers: {
             Authorization: `Bearer ${token}`,

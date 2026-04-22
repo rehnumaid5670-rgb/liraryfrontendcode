@@ -14,7 +14,7 @@ function Catalogue() {
 
   const fetchBooks = async () => {
     try {
-      const res = await axios.get("https://thisisfinalrepoofbackend.vercel.app/");
+      const res = await axios.get("https://thisisfinalrepoofbackend.vercel.app/api/media");
 
       // ✅ only ebooks
       const books = res.data.filter(item => item.type === "ebook");

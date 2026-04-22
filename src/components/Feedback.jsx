@@ -26,7 +26,7 @@ function UserFeedback() {
     try {
       setLoading(true);
 
-      await axios.post("https://thisisfinalrepoofbackend.vercel.app/", form);
+      await axios.post("https://thisisfinalrepoofbackend.vercel.app/api/feedback", form);
 
       setMsg("✅ Feedback submitted successfully!");
 

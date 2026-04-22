@@ -141,7 +141,7 @@ function LibraryCard() {
     try {
 
       const response = await axios.post(
-        "https://thisisfinalrepoofbackend.vercel.app/",
+        "https://thisisfinalrepoofbackend.vercel.app/api/card/apply-card",
         formData
       );
 

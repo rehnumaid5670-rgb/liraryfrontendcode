@@ -21,7 +21,7 @@ function AdminLogin() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://thisisfinalrepoofbackend.vercel.app/", data);
+      const res = await axios.post("https://thisisfinalrepoofbackend.vercel.app/api/adminpanel/login", data);
 
       if (res.data.success) {
         localStorage.setItem("adminToken", res.data.token);

@@ -13,7 +13,7 @@ function ManageUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("https://thisisfinalrepoofbackend.vercel.app/");
+      const res = await axios.get("https://thisisfinalrepoofbackend.vercel.app/api/users");
       setUsers(res.data);
     } catch (err) {
       console.log(err);
