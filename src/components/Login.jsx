@@ -1,54 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-function Register() {
+const Login = () => {
 
-  const [form, setForm] = useState({
-    name: "",
+  const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/bookcard")
+    }
+  }, [navigate]);
+
+  // Handle input change
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
+  // Handle login submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError("");
+
     try {
-      await axios.post(
-        "https://thisisfinalrepoofbackend-tk1u.vercel.app/api/auth/register",
-        form
+      const res = await axios.post(
+        "https://thisisfinalrepoofbackend.vercel.app/api/auth/login",
+        formData
       );
 
-      alert("Registration Successful");
-      window.location.href = "/login";
+      // Save token
+      localStorage.setItem("token", res.data.token);
+
+      alert("Login Successful");
+
+      navigate("/");
 
     } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
+      setError(
+        err.response?.data?.message || "Invalid email or password"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
 
-      <h2>Register</h2>
+      <h2>Login</h2>
+
+      {error && <p className="error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
-
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          required
-        />
 
         <input
           type="email"
           name="email"
           placeholder="Email"
+          value={formData.email}
           onChange={handleChange}
           required
         />
@@ -57,16 +82,28 @@ function Register() {
           type="password"
           name="password"
           placeholder="Password"
+          value={formData.password}
           onChange={handleChange}
           required
         />
 
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
 
       </form>
 
+      {/* <p>
+        Don't have an account? <Link to="/register">Register</Link>
+      </p> */}
+  <p>
+        Don't have an account?{" "}
+        <Link to="/register" style={{ color: "#2a9d8f", textDecoration: "underline" }}>
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
-}
+};
 
-export default Register;
+export default Login;
