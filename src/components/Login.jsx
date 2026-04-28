@@ -1,88 +1,67 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function Login() {
+function Register() {
 
-  const [login, setLogin] = useState({
-    email:"",
-    password:""
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: ""
   });
 
   const handleChange = (e) => {
-    setLogin({...login,[e.target.name]:e.target.value});
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // 🔥 NEW: call backend login API
-      const res = await axios.post(
-        "https://thisisfinalrepoofbackend-tk1u.vercel.app/api/auth/login",
-        login
-      );
-
-      // 🔥 NEW: store token
-      localStorage.setItem("token", res.data.token);
-
-      // 🔥 NEW: store logged-in user
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      // 🔥 NEW: send login data for admin tracking
       await axios.post(
-        "https://thisisfinalrepoofbackend-tk1u.vercel.app/api/adminpanel/login-data",
-        {
-          email: login.email,
-          time: new Date()
-        }
+        "https://thisisfinalrepoofbackend-tk1u.vercel.app/api/auth/register",
+        form
       );
 
-      alert("Login Successful");
-      window.location.href = "/";
+      alert("Registration Successful");
+      window.location.href = "/login";
 
     } catch (err) {
-
-      // fallback to old localStorage check (optional)
-      const savedUser = JSON.parse(localStorage.getItem("user"));
-
-      if(
-        savedUser &&
-        login.email === savedUser.email &&
-        login.password === savedUser.password
-      ){
-        alert("Login Successful (Local)");
-        window.location.href = "/";
-      }
-      else{
-        alert(err.response?.data?.message || "Invalid Email or Password");
-      }
+      alert(err.response?.data?.message || "Registration failed");
     }
   };
 
   return (
     <div className="auth-container">
 
-      <h2>Login</h2>
+      <h2>Register</h2>
 
       <form onSubmit={handleSubmit}>
 
         <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        onChange={handleChange}
-        required
+          type="text"
+          name="name"
+          placeholder="Name"
+          onChange={handleChange}
+          required
         />
 
         <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={handleChange}
-        required
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          required
         />
 
-        <button type="submit">Login</button>
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit">Register</button>
 
       </form>
 
@@ -90,4 +69,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
